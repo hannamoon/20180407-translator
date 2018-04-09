@@ -6,6 +6,39 @@
 <title>20180407-translator</title>
 </head>
 <body>
-	funny translator
+	<div id="wrap" class="wrap">
+		<h1>Funny Translator</h1>
+		<div class="translate__input-wrap">
+			<textarea id="inputTranslate" class="translate__input"></textarea>
+		</div>
+		<div class="translate__btns-wrap">
+			<button id="btnTranslate" class="translate__btn-translate">변환</button>
+		</div>
+		<div class="translate__result-wrap">
+			<p id="resultTranslate" class="translate__result"></p>
+		</div>
+	</div>
+	<script src="http://e-.github.io/Hangul.js/hangul.js" type="text/javascript"></script>
+	<script type="text/javascript">
+
+		var originalText = document.querySelector('textarea').value;
+
+		function translator(str) {
+      return str.split('').map(char => {
+        var d = Hangul.disassemble(char);
+	      if (d[3] && Hangul.isVowel(d[1]) && Hangul.isVowel(d[2])) {
+	        var tmp = d[2];
+	        d[2] = d[3];
+	        d[3] = tmp;
+	      }
+        return Hangul.assemble(d);
+	    }).join('');
+    }
+
+		document.getElementById('btnTranslate').addEventListener('click',function(e) {
+      var originalText = document.getElementById('inputTranslate').value;
+			document.getElementById('resultTranslate').innerHTML = translator(originalText);
+    });
+	</script>
 </body>
 </html>
